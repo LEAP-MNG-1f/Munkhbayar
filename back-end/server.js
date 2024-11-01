@@ -14,20 +14,35 @@ app.use(bodyParser.json());
 const Port = 3939;
 
 let users = [
-  { name: "tuugii", age: 32 },
-  { name: "toogii", age: 22 },
+  { id: 1, name: "tuugii", age: 32 },
+  { id: 2, name: "toogii", age: 22 },
 ];
 
 app.get("/users", (request, response) => {
   response.send(users);
 });
 app.post("/users", (request, response) => {
-  const newUser = request.body;
+  let newUser = request.body;
+  newUser = {
+    id: `${Math.random()}`,
+    ...newUser,
+  };
   users.push(newUser);
   response.send(users);
 });
 app.put("/users", (request, response) => {
-  response.send("im put");
+  const { id, name, age } = request.body;
+  users = users.map((user) => {
+    if (user.id == id) {
+      return {
+        ...user,
+        name: name,
+        age: age,
+      };
+    }
+    return user;
+  });
+  response.send(users);
 });
 app.delete("/users", (request, response) => {
   const { name } = request.body;
@@ -38,3 +53,5 @@ app.delete("/users", (request, response) => {
 app.listen(Port, () => {
   console.log("ajillaj ehellee");
 });
+//(){} function
+//()=>{}  Arrow function

@@ -8,9 +8,14 @@
 // server.listen(3333);
 import express from "express";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import cors from "cors";
+dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
+
 const Port = 3939;
 
 let users = [
